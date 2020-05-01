@@ -14,8 +14,8 @@ private:
 public:
     salesman();
     void readIn(string);
-    void trivial();
-    void nearestNeighbor();
+    void trivial(string);
+    void nearestNeighbor(string);
 };
 
 

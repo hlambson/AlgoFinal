@@ -7,5 +7,6 @@ using namespace std;
 int main() {
     salesman test;
     test.readIn("g1.txt");
+    test.nearestNeighbor("A");
     return 0;
 }

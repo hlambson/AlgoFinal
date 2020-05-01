@@ -21,6 +21,7 @@ public:
     unordered_map<T,U>& getMap();
     void insert(T, storage<U>&);
     typename unordered_map<T,storage<U>>::iterator find(T);
+    int getSize();
 };
 
 //default constructor
@@ -93,6 +94,10 @@ typename unordered_map<T,storage<U>>::iterator AdjacencyList<T,U>::find(T key) {
     return tempItr;
 }
 
+template<typename T, typename U>
+int AdjacencyList<T,U>::getSize() {
+    return size;
+}
 
 
 #endif //PROGRAM2_ADJACENCYLIST_H

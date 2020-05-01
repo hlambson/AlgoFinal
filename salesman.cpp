@@ -39,3 +39,36 @@ void salesman::readIn(string f) {
        x ++;
     }
 }
+
+void salesman::trivial(string start) {
+
+}
+
+void salesman::nearestNeighbor(string start) {
+    auto itr = map.find(start);
+    int num = map.getSize();
+
+    vector<string> path;
+    path.push_back(start);
+    double total = 0;
+    while(path.size() < num) {
+        double min = itr->second.getConnections()[0].getWeight();
+        int index = 0;
+        for(int x = 0; x < itr->second.getConnections().size(); x++) {
+            if (itr->second.getConnections()[x].getWeight() < min) {
+                min = itr->second.getConnections()[x].getWeight();
+                index = x;
+            }
+        }
+        path.push_back(itr->second.getConnections()[index].getName());
+        total += itr->second.getConnections()[index].getWeight();
+        itr = map.find(itr->second.getConnections()[index].getName());
+    }
+
+    for (int x = 0; x < itr->second.getConnections().size(); x++) {
+        if (itr->second.getConnections()[x].getName() == start) {
+            total += itr->second.getConnections()[x].getWeight();
+        }
+    }
+    path.push_back(start);
+}
