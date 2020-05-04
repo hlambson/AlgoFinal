@@ -8,5 +8,6 @@ int main() {
     salesman test;
     test.readIn("g1.txt");
     test.nearestNeighbor("A");
+  //test.trivial("A");
     return 0;
 }

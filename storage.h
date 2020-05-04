@@ -19,6 +19,7 @@ public:
     storage();
     storage(string, T);
     storage(string);
+    storage& operator=(storage&);
     string& getName();
     vector<T>& getConnections();
     double& getWeight();
@@ -43,6 +44,12 @@ storage<T>::storage(string n) {
     name = n;
 }
 
+template<typename T>
+storage<T>& storage<T>::operator=(storage<T>& x) {
+    this->weight = x.weight;
+    this->name = x.name;
+    this->connections = x.connections;
+}
 template<typename T>
 string& storage<T>::getName() {
     return name;

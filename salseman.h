@@ -11,6 +11,7 @@ using namespace std;
 class salesman {
 private:
     AdjacencyList<string, node> map;
+    vector<node> nodes;
 public:
     salesman();
     void readIn(string);

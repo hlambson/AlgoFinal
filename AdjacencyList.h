@@ -86,7 +86,7 @@ void AdjacencyList<T,U>::insert(T key, storage<U>& val) {
 template<typename T, typename U>
 typename unordered_map<T,storage<U>>::iterator AdjacencyList<T,U>::find(T key) {
     typename unordered_map<T,storage<U>>::iterator tempItr = map.find(key);
-
+    storage<U> test = tempItr->second;
     if (tempItr == map.end()) {
         cout << "error, could not find that key" << endl;
         exit(-1);
