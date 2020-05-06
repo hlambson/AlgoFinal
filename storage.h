@@ -49,6 +49,7 @@ storage<T>& storage<T>::operator=(storage<T>& x) {
     this->weight = x.weight;
     this->name = x.name;
     this->connections = x.connections;
+    return *this;
 }
 template<typename T>
 string& storage<T>::getName() {

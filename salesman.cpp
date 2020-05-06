@@ -6,6 +6,7 @@
 #include "fstream"
 #include "DSStack.h"
 #include <stack>
+#include <cstring>
 
 salesman::salesman() {
 
@@ -93,7 +94,7 @@ void salesman::trivial(string start) {
                 if (!allPaths.contains(path)) {
                     int index = 0;
                     for (int i = 0; i < itr->second.getConnections().size(); i++) {
-                        if(itr->second.getConnections()[i].getName() == start) {
+                        if(strcmp(itr->second.getConnections()[i].getName().c_str(), start.c_str()) == 0) {
                             path.push(start);
                             another.push(start);
                             index = i;
@@ -140,7 +141,14 @@ void salesman::nearestNeighbor(string start) {
         int index2;
         int counter = 0;
         for (int x = 0; x < nodes.size(); x++) {
-            if (nodes[x].getName() == itr->second.getConnections()[counter].getName()) {
+            auto p = test.getConnections();
+            auto q = p[counter];
+            auto r = q.getName();
+            auto h = nodes[x];
+          //  bool t = h.getName() == r;
+            if (strcmp(h.getName().c_str(), r.c_str()) == 0) {
+            //if (h.getName() == r){
+            //if (nodes[x].getName() == test.getConnections()[counter].getName()) {
                 if (nodes[x].getVisited() != 0) {
                     counter ++;
                     min = itr->second.getConnections()[counter].getWeight();
