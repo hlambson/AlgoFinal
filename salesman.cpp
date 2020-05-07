@@ -65,9 +65,9 @@ void salesman::trivial(string start) {
     DSStack<string> path;
     DSVector<DSStack<string>> allPaths; //im using these because they have contains functions lol
     stack<string> another;
-    vector<double> allWeights;
-    double weight = 0;
-    double tempWeight;
+    vector<int> allWeights;
+    int weight = 0;
+    int tempWeight;
     path.push(start);
     another.push(start);
     auto itr = map.find(start);
@@ -116,6 +116,7 @@ void salesman::trivial(string start) {
         }
 
     }
+    cout << "done" << endl;
 }
 
 void salesman::nearestNeighbor(string start) {
@@ -141,14 +142,7 @@ void salesman::nearestNeighbor(string start) {
         int index2;
         int counter = 0;
         for (int x = 0; x < nodes.size(); x++) {
-            auto p = test.getConnections();
-            auto q = p[counter];
-            auto r = q.getName();
-            auto h = nodes[x];
-          //  bool t = h.getName() == r;
-            if (strcmp(h.getName().c_str(), r.c_str()) == 0) {
-            //if (h.getName() == r){
-            //if (nodes[x].getName() == test.getConnections()[counter].getName()) {
+            if (strcmp(nodes[x].getName().c_str(), test.getConnections()[counter].getName().c_str()) == 0) {
                 if (nodes[x].getVisited() != 0) {
                     counter ++;
                     min = itr->second.getConnections()[counter].getWeight();
@@ -164,7 +158,7 @@ void salesman::nearestNeighbor(string start) {
             if (itr->second.getConnections()[x].getWeight() < min) {
                 bool check = false;
                 for (int y = 0; y < nodes.size(); y++) {
-                    if (nodes[y].getName() == itr->second.getConnections()[x].getName() && nodes[y].getVisited() == 0) {
+                    if (strcmp(nodes[y].getName().c_str(),itr->second.getConnections()[x].getName().c_str()) == 0 && nodes[y].getVisited() == 0) {
                         check = true;
                         index2 = y;
                     }
@@ -175,17 +169,29 @@ void salesman::nearestNeighbor(string start) {
                 }
             }
         }
-        path.push_back(itr->second.getConnections()[index].getName());
-        nodes[index2].setVisited(1);
-        total += itr->second.getConnections()[index].getWeight();
-        itr = map.find(itr->second.getConnections()[index].getName());
+        if (path.size() == num -1) {
+            path.push_back(itr->second.getConnections()[counter].getName().c_str());
+            total += itr->second.getConnections()[counter].getWeight();
+            itr = map.find(itr->second.getConnections()[counter].getName());
+        }
+        else {
+            path.push_back(itr->second.getConnections()[index].getName().c_str());
+
+            nodes[index2].setVisited(1);
+            total += itr->second.getConnections()[index].getWeight();
+            itr = map.find(itr->second.getConnections()[index].getName());
+        }
     }
 
+    test = itr->second;
     for (int x = 0; x < itr->second.getConnections().size(); x++) {
-        if (itr->second.getConnections()[x].getName() == start) {
+        if (strcmp(itr->second.getConnections()[x].getName().c_str(),start.c_str()) == 0) {
             total += itr->second.getConnections()[x].getWeight();
         }
     }
-    path.push_back(start);
-    cout << "done" << endl;
+    path.push_back(start.c_str());
+    for (int x = 0; x < path.size(); x++) {
+        cout << path[x] << endl;
+    }
+    cout << total << endl;
 }

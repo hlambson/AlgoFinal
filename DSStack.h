@@ -17,14 +17,14 @@ public:
     DSStack<T>& operator=(const DSStack<T>&);
     bool operator==(DSStack<T>&);
 
-    void push(const T&);
+    void push(T&);
     void pop();
     T peek();
     bool isEmpty();
     int getSize();
     DSVector<T> getData();
 
-    bool contains(const T);
+    bool contains(T);
 };
 
 //default constructor
@@ -72,7 +72,7 @@ DSStack<T>::~DSStack() {
 
 //push a value onto the stack
 template <typename T>
-void DSStack<T>::push(const T& x) {
+void DSStack<T>::push(T& x) {
     data.push_back(x);
     size ++;
 }
@@ -104,7 +104,7 @@ int DSStack<T>::getSize() {
 
 //check if a value is in the stack
 template <typename T>
-bool DSStack<T>::contains(const T x) {
+bool DSStack<T>::contains(T x) {
     return data.contains(x);
 }
 template <typename T>

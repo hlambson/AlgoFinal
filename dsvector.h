@@ -25,7 +25,7 @@ public:
     void pop_back();
     bool empty();
 
-    bool contains(t);
+    bool contains(t&);
     
 };
 
@@ -135,8 +135,11 @@ DSVector<t>::~DSVector() {
 }
 
 template <typename t>
-bool DSVector<t>::contains(t x) {
+bool DSVector<t>::contains(t& x) {
     bool D4C = false;
+    if (size == 0) {
+        return false;
+    }
     for (int i = 0; i < size; i++) {
         if (arr[i] == x) {
             return true;
