@@ -66,6 +66,7 @@ void salesman::trivial(string start) {
     DSStack<DSString> path;
     DSVector<DSStack<DSString>> allPaths; //im using these because they have contains functions lol
     stack<string> another;
+    stack<int> weights;
     vector<int> allWeights;
     int weight = 0;
     int tempWeight;
@@ -80,6 +81,7 @@ void salesman::trivial(string start) {
                 path.push(itr->second.getConnections()[x].getName().c_str());
                 another.push(itr->second.getConnections()[x].getName());
                 weight += itr->second.getConnections()[x].getWeight();
+                weights.push(itr->second.getConnections()[x].getWeight());
                 tempWeight = itr->second.getConnections()[x].getWeight();
                 itr->second.getConnections()[x].setVisited(1);
                 check = false;
@@ -92,7 +94,10 @@ void salesman::trivial(string start) {
             }
             path.pop();
             another.pop();
-            weight -= tempWeight;
+            if (weights.size() > 0) {
+                weight -= weights.top();
+                weights.pop();
+            }
             if (path.getSize() > 0) {
                 itr = map.find(path.peek().c_str());
             }
@@ -108,13 +113,15 @@ void salesman::trivial(string start) {
                             another.push(start);
                             index = i;
                             weight += itr->second.getConnections()[i].getWeight();
+                            weights.push(itr->second.getConnections()[i].getWeight());
                         }
                     }
                     allPaths.push_back(path);
                     allWeights.push_back(weight);
                     path.pop();
                     another.pop();
-                    weight -= itr->second.getConnections()[index].getWeight();
+                    weight -= weights.top();
+                    weights.pop();
                 }
                 auto itr3 = map.find(path.peek().c_str());
                 for (int x = 0; x < itr3->second.getConnections().size(); x++) {
@@ -122,14 +129,36 @@ void salesman::trivial(string start) {
                 }
                 path.pop();
                 another.pop();
-                weight -= tempWeight;
+                weight -= weights.top();
+                weights.pop();
 
             }
             itr = map.find(path.peek().c_str());
         }
 
     }
-    cout << "done" << endl;
+    int min = allWeights[0];
+    int index = 0;
+    for (int x = 0; x < allWeights.size(); x++) {
+        if(allWeights[x] < min) {
+            min = allWeights[x];
+            index = x;
+        }
+    }
+
+    DSStack<DSString> truePath = allPaths[index];
+    DSStack<DSString> reverse;
+    while(!truePath.isEmpty()) {
+        reverse.push(truePath.peek());
+        truePath.pop();
+    }
+
+    while(!reverse.isEmpty()) {
+        cout << reverse.peek() << endl;
+        reverse.pop();
+    }
+    cout << min << endl;
+
 }
 
 void salesman::nearestNeighbor(string start) {
