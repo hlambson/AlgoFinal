@@ -7,6 +7,7 @@ node::node() {
     val = 0;
     num = 0;
     weight = 0;
+    visited = 0;
 }
 
 node::node(string n) {
@@ -14,6 +15,7 @@ node::node(string n) {
     val = 0;
     num = 0;
     weight = 0;
+    visited = 0;
 }
 
 string& node::getName() {

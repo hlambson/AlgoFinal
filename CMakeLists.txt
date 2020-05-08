@@ -18,4 +18,4 @@ endforeach()
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Final main.cpp edge.cpp edge.cpp node.h node.cpp AdjacencyList.h salesman.cpp salseman.h DSStack.h)
+add_executable(Final main.cpp edge.cpp edge.cpp node.h node.cpp AdjacencyList.h salesman.cpp salseman.h DSStack.h dsstring.cpp dsstring.h)

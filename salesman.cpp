@@ -7,6 +7,7 @@
 #include "DSStack.h"
 #include <stack>
 #include <cstring>
+#include "dsstring.h"
 
 salesman::salesman() {
 
@@ -62,40 +63,48 @@ void salesman::readIn(string f) {
 }
 
 void salesman::trivial(string start) {
-    DSStack<string> path;
-    DSVector<DSStack<string>> allPaths; //im using these because they have contains functions lol
+    DSStack<DSString> path;
+    DSVector<DSStack<DSString>> allPaths; //im using these because they have contains functions lol
     stack<string> another;
     vector<int> allWeights;
     int weight = 0;
     int tempWeight;
-    path.push(start);
+    path.push(start.c_str());
     another.push(start);
     auto itr = map.find(start);
     int num = map.getSize();
     while(!path.isEmpty()) {
         bool check = true;
         for (int x = 0; x < itr->second.getConnections().size(); x++) {
-            if (!path.contains(itr->second.getConnections()[x].getName()) && check == true) {
-                path.push(itr->second.getConnections()[x].getName());
+            if (!path.contains(itr->second.getConnections()[x].getName().c_str()) && check == true && itr->second.getConnections()[x].getVisited() == 0) {
+                path.push(itr->second.getConnections()[x].getName().c_str());
                 another.push(itr->second.getConnections()[x].getName());
                 weight += itr->second.getConnections()[x].getWeight();
                 tempWeight = itr->second.getConnections()[x].getWeight();
+                itr->second.getConnections()[x].setVisited(1);
                 check = false;
             }
         }
         if (check == true) {
+            auto itr2 = map.find(path.peek().c_str());
+            for (int x = 0; x < itr2->second.getConnections().size(); x++) {
+                itr2->second.getConnections()[x].setVisited(0);
+            }
             path.pop();
             another.pop();
             weight -= tempWeight;
-            itr = map.find(path.peek());
+            if (path.getSize() > 0) {
+                itr = map.find(path.peek().c_str());
+            }
         }
         else {
             if (path.getSize() == num) {
                 if (!allPaths.contains(path)) {
                     int index = 0;
+                    itr = map.find(path.peek().c_str());
                     for (int i = 0; i < itr->second.getConnections().size(); i++) {
                         if(strcmp(itr->second.getConnections()[i].getName().c_str(), start.c_str()) == 0) {
-                            path.push(start);
+                            path.push(start.c_str());
                             another.push(start);
                             index = i;
                             weight += itr->second.getConnections()[i].getWeight();
@@ -107,12 +116,16 @@ void salesman::trivial(string start) {
                     another.pop();
                     weight -= itr->second.getConnections()[index].getWeight();
                 }
+                auto itr3 = map.find(path.peek().c_str());
+                for (int x = 0; x < itr3->second.getConnections().size(); x++) {
+                    itr3->second.getConnections()[x].setVisited(0);
+                }
                 path.pop();
                 another.pop();
                 weight -= tempWeight;
 
             }
-            itr = map.find(path.peek());
+            itr = map.find(path.peek().c_str());
         }
 
     }

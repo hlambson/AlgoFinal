@@ -17,7 +17,7 @@ public:
     DSStack<T>& operator=(const DSStack<T>&);
     bool operator==(DSStack<T>&);
 
-    void push(T&);
+    void push( const T&);
     void pop();
     T peek();
     bool isEmpty();
@@ -72,7 +72,7 @@ DSStack<T>::~DSStack() {
 
 //push a value onto the stack
 template <typename T>
-void DSStack<T>::push(T& x) {
+void DSStack<T>::push(const T& x) {
     data.push_back(x);
     size ++;
 }
