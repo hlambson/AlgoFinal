@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.15)
 project(Final)
 
-set (input01 "")
-set (input02 "")
-set (input03 "")
+set (input01 "g1.txt")
+set (input02 "g2.txt")
+set (input03 "g3.txt")
 set (input04 "")
 set (output01 "")
 
@@ -18,4 +18,4 @@ endforeach()
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Final main.cpp edge.cpp edge.cpp node.h node.cpp AdjacencyList.h salesman.cpp salseman.h DSStack.h dsstring.cpp dsstring.h)
+add_executable(Final main.cpp edge.cpp edge.cpp node.h node.cpp AdjacencyList.h salesman.cpp salseman.h DSStack.h dsstring.cpp dsstring.h g1.txt g2.txt g3.txt)
